@@ -3,6 +3,7 @@ import client from './api/client'
 import GrowthChart from './components/GrowthChart'
 
 const AFFILIATE_URL = import.meta.env.VITE_AFFILIATE_URL || 'https://example.com/start-investing'
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || (import.meta.env.DEV ? 'http://localhost:8000/api' : 'not configured')
 const TOKEN_KEY = 'stablemoney_access_token'
 const USER_KEY = 'stablemoney_user'
 
@@ -29,7 +30,7 @@ function formatCurrency(value) {
 function extractApiErrorMessage(error, fallbackMessage) {
   const payload = error?.response?.data
   if (!error?.response) {
-    return 'Backend API is not reachable. Start Django server on http://localhost:8000 and try again.'
+    return `Backend API is not reachable. Check VITE_API_BASE_URL (${API_BASE_URL}) and confirm backend is deployed and running.`
   }
   if (!payload) {
     return fallbackMessage
